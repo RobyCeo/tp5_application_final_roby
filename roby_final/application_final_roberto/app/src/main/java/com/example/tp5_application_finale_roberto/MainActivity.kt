@@ -20,9 +20,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             Tp5_application_finale_robertoTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    HomePage() // Appel à votre HomePage
+                    HomePage(innerPadding) // Passer innerPadding à HomePage
                 }
             }
         }
     }
 }
+

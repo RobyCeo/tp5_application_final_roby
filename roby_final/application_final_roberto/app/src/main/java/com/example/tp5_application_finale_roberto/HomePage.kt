@@ -12,19 +12,21 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomePage() {
+fun HomePage(paddingValues: PaddingValues) {
     var isVisible by remember { mutableStateOf(false) }
 
     val infiniteTransition = rememberInfiniteTransition()
     val circleSize by infiniteTransition.animateFloat(
-        initialValue = 100f,
-        targetValue = 150f,
+        initialValue = 300f,
+        targetValue = 2000f,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 1000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse
         )
     )
+
 
     LaunchedEffect(Unit) {
         isVisible = true
@@ -37,11 +39,11 @@ fun HomePage() {
                 colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = Color(0xFF6200EE))
             )
         }
-    ) { padding ->
+    ) { paddingValuesFromScaffold -> // Renommez le paramètre pour éviter l'utilisation de `_`
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding),
+                .padding(paddingValuesFromScaffold), // Utilisez ici le padding provenant de Scaffold
             contentAlignment = Alignment.Center
         ) {
             Box(
@@ -58,9 +60,12 @@ fun HomePage() {
                 Text(
                     text = "Welcome to RobyWorkout!",
                     fontSize = 28.sp,
-                    color = Color.White
+                    color = Color.White,
+                    modifier = Modifier.wrapContentWidth(Alignment.CenterHorizontally).wrapContentHeight()
                 )
             }
         }
     }
 }
+
+
