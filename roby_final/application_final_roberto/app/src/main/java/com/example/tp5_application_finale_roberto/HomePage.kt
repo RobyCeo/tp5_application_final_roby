@@ -1,3 +1,4 @@
+import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -14,13 +15,23 @@ import androidx.compose.ui.unit.sp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePage(paddingValues: PaddingValues) {
-    // Animation pour la respiration (agrandissement/rétrécissement)
+    // Animation pour l'image (respiration)
     val infiniteTransition = rememberInfiniteTransition()
     val scale by infiniteTransition.animateFloat(
-        initialValue = 0.9f,
-        targetValue = 1.1f,
+        initialValue = 3.0f,
+        targetValue = 3.5f,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 1000, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
+
+    // Animation pour le texte (scintillement ou mouvement subtil)
+    val textAlpha by infiniteTransition.animateFloat(
+        initialValue = 0.5f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 800, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse
         )
     )
@@ -28,7 +39,7 @@ fun HomePage(paddingValues: PaddingValues) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("RobyWorkout") },
+                title = { Text("Welcome") },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = Color(0xFF6200EE))
             )
         }
@@ -39,9 +50,9 @@ fun HomePage(paddingValues: PaddingValues) {
                 .padding(paddingValuesFromScaffold),
             contentAlignment = Alignment.Center
         ) {
-            // Image animée (VectorDrawable)
+            // Image animée (respiration)
             Image(
-                painter = painterResource(id = R.drawable.download), // Remplacez "download" par le nom de votre VectorDrawable
+                painter = painterResource(id = com.example.tp5_application_finale_roberto.R.drawable.download),
                 contentDescription = "Silhouette d'une personne qui s'entraîne",
                 modifier = Modifier
                     .size(300.dp) // Taille de l'image
@@ -51,14 +62,15 @@ fun HomePage(paddingValues: PaddingValues) {
                     )
             )
 
-            // Texte sous l'image
+            // Texte animé (scintillement avec alpha)
             Text(
                 text = "Welcome to RobyWorkout!",
-                fontSize = 24.sp,
-                color = MaterialTheme.colorScheme.onSurface,
+                fontSize = 30.sp,
+                color = Color.Cyan,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 50.dp)
+                    .padding(bottom = 100.dp)
+                    .graphicsLayer(alpha = textAlpha) // Animation de transparence
             )
         }
     }
