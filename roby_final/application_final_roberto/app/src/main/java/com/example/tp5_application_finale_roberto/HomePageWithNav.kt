@@ -12,30 +12,47 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.tp5_application_finale_roberto.ExerciseListScreen
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePageWithNav() {
-    var drawerState by remember { mutableStateOf(false) } // État pour ouvrir/fermer le menu
+    val drawerState = rememberDrawerState(DrawerValue.Closed) // État du menu latéral
+    val scope = rememberCoroutineScope() // Pour gérer l'ouverture/fermeture du menu
+    var selectedOption by remember { mutableStateOf("Home") } // Option sélectionnée
 
     ModalNavigationDrawer(
-        drawerState = rememberDrawerState(if (drawerState) DrawerValue.Open else DrawerValue.Closed),
+        drawerState = drawerState,
         drawerContent = {
-            DrawerContent { drawerState = false } // Contenu du menu latéral
+            DrawerContent(
+                onItemClick = { option ->
+                    selectedOption = option // Met à jour l'option sélectionnée
+                    scope.launch { drawerState.close() } // Ferme le menu
+                }
+            )
         }
     ) {
         Scaffold(
             topBar = {
-                AnimatedTopAppBar(
-                    onMenuClick = { drawerState = true } // Ouvre le menu
+                TopAppBar(
+                    title = { Text("Navigation") },
+                    navigationIcon = {
+                        IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                            Icon(Icons.Filled.Menu, contentDescription = "Menu")
+                        }
+                    }
                 )
             }
         ) { paddingValues ->
-            // Contenu principal de la page
-            HomePage(paddingValues)
+            when (selectedOption) {
+                "Home" -> HomePage(paddingValues)
+                "Liste des exercices" -> ExerciseListScreen()
+            }
         }
     }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,7 +87,7 @@ fun AnimatedTopAppBar(onMenuClick: () -> Unit) {
 }
 
 @Composable
-fun DrawerContent(onItemClick: () -> Unit) {
+fun DrawerContent(onItemClick: (String) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -79,16 +96,16 @@ fun DrawerContent(onItemClick: () -> Unit) {
     ) {
         Text(
             text = "Menu",
-            fontSize = 24.sp,
-            color = Color.Black,
-            modifier = Modifier.padding(bottom = 16.dp)
+            fontSize = 30.sp, // Texte plus grand pour le titre du menu
+            modifier = Modifier.padding(bottom = 24.dp)
         )
         ClickableText(
             text = AnnotatedString("Liste des exercices"),
-            onClick = {
-                onItemClick() // Appelle la navigation
-            },
-            modifier = Modifier.padding(vertical = 8.dp)
+            onClick = { onItemClick("Liste des exercices") },
+            modifier = Modifier
+                .padding(vertical = 16.dp)
+                .fillMaxWidth()
         )
     }
 }
+

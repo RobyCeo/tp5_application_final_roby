@@ -66,7 +66,7 @@ fun HomePage(paddingValues: PaddingValues) {
             Text(
                 text = "W E L C O M E",
                 fontSize = 30.sp,
-                color = Color.Yellow,
+                color = Color.DarkGray,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 100.dp)
