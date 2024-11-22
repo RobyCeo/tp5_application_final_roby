@@ -1,36 +1,29 @@
-import androidx.compose.animation.*
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.animation.core.*
-import androidx.compose.foundation.background
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePage(paddingValues: PaddingValues) {
-    var isVisible by remember { mutableStateOf(false) }
-
+    // Animation pour la respiration (agrandissement/rétrécissement)
     val infiniteTransition = rememberInfiniteTransition()
-    val circleSize by infiniteTransition.animateFloat(
-        initialValue = 300f,
-        targetValue = 2000f,
+    val scale by infiniteTransition.animateFloat(
+        initialValue = 0.9f,
+        targetValue = 1.1f,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 1000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse
         )
     )
-
-
-    LaunchedEffect(Unit) {
-        isVisible = true
-    }
 
     Scaffold(
         topBar = {
@@ -39,33 +32,34 @@ fun HomePage(paddingValues: PaddingValues) {
                 colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = Color(0xFF6200EE))
             )
         }
-    ) { paddingValuesFromScaffold -> // Renommez le paramètre pour éviter l'utilisation de `_`
+    ) { paddingValuesFromScaffold ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValuesFromScaffold), // Utilisez ici le padding provenant de Scaffold
+                .padding(paddingValuesFromScaffold),
             contentAlignment = Alignment.Center
         ) {
-            Box(
+            // Image animée (VectorDrawable)
+            Image(
+                painter = painterResource(id = R.drawable.download), // Remplacez "download" par le nom de votre VectorDrawable
+                contentDescription = "Silhouette d'une personne qui s'entraîne",
                 modifier = Modifier
-                    .size(circleSize.dp)
-                    .background(color = Color(0xFFBB86FC), shape = CircleShape)
+                    .size(300.dp) // Taille de l'image
+                    .graphicsLayer(
+                        scaleX = scale,
+                        scaleY = scale // Appliquez l'animation de respiration
+                    )
             )
 
-            AnimatedVisibility(
-                visible = isVisible,
-                enter = fadeIn(animationSpec = tween(1000)) + scaleIn(initialScale = 0.5f),
-                exit = fadeOut(animationSpec = tween(500))
-            ) {
-                Text(
-                    text = "Welcome to RobyWorkout!",
-                    fontSize = 28.sp,
-                    color = Color.White,
-                    modifier = Modifier.wrapContentWidth(Alignment.CenterHorizontally).wrapContentHeight()
-                )
-            }
+            // Texte sous l'image
+            Text(
+                text = "Welcome to RobyWorkout!",
+                fontSize = 24.sp,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 50.dp)
+            )
         }
     }
 }
-
-
