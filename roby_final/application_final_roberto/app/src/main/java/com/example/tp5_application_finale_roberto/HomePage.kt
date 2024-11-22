@@ -64,9 +64,9 @@ fun HomePage(paddingValues: PaddingValues) {
 
             // Texte animé (scintillement avec alpha)
             Text(
-                text = "Welcome to RobyWorkout!",
+                text = "W E L C O M E",
                 fontSize = 30.sp,
-                color = Color.Cyan,
+                color = Color.Yellow,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 100.dp)
