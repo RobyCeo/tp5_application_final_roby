@@ -31,7 +31,7 @@ fun TrainingPlanScreen() {
     val sets = remember { mutableStateOf("") }
     val repetitions = remember { mutableStateOf("") }
     val planDuration = remember { mutableStateOf("") }
-
+    // test pas rapport
     Column(
         modifier = Modifier
             .fillMaxSize()
