@@ -9,7 +9,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
@@ -27,10 +26,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.graphics.Brush
 import com.example.tp5_application_finale_roberto.ExerciseListScreen
 import kotlinx.coroutines.launch
 import androidx.compose.ui.platform.LocalContext
+import com.example.tp5_application_finale_roberto.EditExerciseScreen
+import com.example.tp5_application_finale_roberto.TrainingExercise
+import com.example.tp5_application_finale_roberto.TrainingPlanListScreen
 import com.example.tp5_application_finale_roberto.TrainingPlanScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,6 +40,8 @@ fun HomePageWithNav() {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var selectedOption by remember { mutableStateOf("Home") }
+    val exercises = remember { mutableStateListOf<TrainingExercise>() } // Remplace Exercise par TrainingExercise
+    val selectedExercise = remember { mutableStateOf<TrainingExercise?>(null) } // Remplace Exercise par TrainingExercise
     val context = LocalContext.current
 
     ModalNavigationDrawer(
@@ -73,15 +76,37 @@ fun HomePageWithNav() {
             Box(modifier = Modifier.padding(paddingValues).fillMaxSize()) {
                 when (selectedOption) {
                     "Home" -> AnimatedHomeScreen()
-                    "Liste des exercices" -> ExerciseListScreen(context)
+                    "Liste des exercices" -> ExerciseListScreen(context) // Pas de changement ici
                     "Retour à l'accueil" -> AnimatedHomeScreen()
-                    "Plan D'entrainement" -> TrainingPlanScreen() // Nouveau composable
+                    "Plan D'entrainement" -> TrainingPlanScreen(
+                        onViewPlansClick = { selectedOption = "Liste des plans" },
+                        exercises = exercises // Utilise la liste de TrainingExercise
+                    )
+                    "Liste des plans" -> TrainingPlanListScreen(
+                        plans = exercises,
+                        onSelectPlan = { selectedExercise.value = it; selectedOption = "Modifier le plan" }
+                    )
+                    "Modifier le plan" -> {
+                        selectedExercise.value?.let { exercise ->
+                            EditExerciseScreen(
+                                exercise = exercise,
+                                onUpdate = { updatedExercise ->
+                                    val index = exercises.indexOf(exercise)
+                                    if (index >= 0) {
+                                        exercises[index] = updatedExercise // Met à jour TrainingExercise
+                                    }
+                                },
+                                onBack = { selectedOption = "Liste des plans" }
+                            )
+                        }
+                    }
                 }
             }
         }
-
     }
 }
+
+
 
 @Composable
 fun DrawerContent(onItemClick: (String) -> Unit) {
