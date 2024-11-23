@@ -61,6 +61,10 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.6.0")
     implementation("androidx.compose.material:material-icons-extended:<latest_version>")
     implementation ("androidx.compose.material:material-icons-extended:<version>")
+    implementation(platform("androidx.compose:compose-bom:2023.10.00"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.runtime:runtime")
 
 
 

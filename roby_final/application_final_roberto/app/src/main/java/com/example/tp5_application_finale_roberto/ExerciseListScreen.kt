@@ -30,7 +30,9 @@ fun ExerciseListScreen(context: Context) {
         "Tractions" to "Exercice pour renforcer le dos et les biceps.",
         "Développé Couché" to "Exercice pour les pectoraux et les triceps avec une barre.",
         "Soulevé de terre" to "Exercice complet pour travailler le bas du dos et les jambes.",
-        "Flexion des biceps avec la barre" to "Exercice pour cibler les biceps."
+        "Flexion des biceps avec la barre" to "Exercice pour renforcer les biceps.",
+        "L'extension poulie haute à la corde" to "Exercice pour renforcer les triceps."
+
     )
 
     Column(
