@@ -2,6 +2,7 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -40,10 +41,21 @@ fun HomePage(paddingValues: PaddingValues) {
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Welcome") },
-                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = Color(0xFF6200EE))
-            )
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                color = Color(0xFF6200EE), // Couleur de fond de la barre
+                shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp), // Arrondi
+                shadowElevation = 15.dp
+            ) {
+                TopAppBar(
+                    title = { Text("Welcome", color = Color.White) },
+                    colors = TopAppBarDefaults.mediumTopAppBarColors(
+                        containerColor = Color.Transparent // Pour éviter un conflit de couleurs
+                    )
+                )
+            }
         }
     ) { paddingValuesFromScaffold ->
         Box(

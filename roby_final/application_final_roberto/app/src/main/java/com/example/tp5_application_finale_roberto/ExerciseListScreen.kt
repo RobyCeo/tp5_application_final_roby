@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,7 +43,7 @@ fun ExerciseListScreen(context: Context) {
             fontSize = 30.sp,
             modifier = Modifier.padding(bottom = 14.dp),
             fontWeight = FontWeight.ExtraBold,
-            fontFamily = FontFamily.Serif
+            fontFamily = FontFamily.Serif,
         )
         // Liste défilable des exercices
         LazyColumn(

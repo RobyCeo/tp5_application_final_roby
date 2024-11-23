@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.Brush
 import com.example.tp5_application_finale_roberto.ExerciseListScreen
 import kotlinx.coroutines.launch
 import androidx.compose.ui.platform.LocalContext
+import com.example.tp5_application_finale_roberto.TrainingPlanScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,24 +56,17 @@ fun HomePageWithNav() {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = {
-                        Text(
-                            text = "Navigation",
-                            color = Color.White // Titre en blanc
-                        )
-                    },
+                    title = { Text(text = "Navigation", color = Color.White) },
                     navigationIcon = {
                         IconButton(onClick = { scope.launch { drawerState.open() } }) {
                             Icon(
                                 imageVector = Icons.Filled.Menu,
                                 contentDescription = "Menu",
-                                tint = Color.White // Icône en blanc
+                                tint = Color.White
                             )
                         }
                     },
-                    colors = TopAppBarDefaults.mediumTopAppBarColors(
-                        containerColor = Color.Blue // Fond bleu de la barre
-                    )
+                    colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = Color.Blue)
                 )
             }
         ) { paddingValues ->
@@ -81,9 +75,11 @@ fun HomePageWithNav() {
                     "Home" -> AnimatedHomeScreen()
                     "Liste des exercices" -> ExerciseListScreen(context)
                     "Retour à l'accueil" -> AnimatedHomeScreen()
+                    "Plan D'entrainement" -> TrainingPlanScreen() // Nouveau composable
                 }
             }
         }
+
     }
 }
 
@@ -92,19 +88,19 @@ fun DrawerContent(onItemClick: (String) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .width(200.dp) // Réduction de la largeur du tiroir
-            .background(Color.Blue, shape = RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp)) // Bord arrondi
+            .width(200.dp)
+            .background(Color.Blue, shape = RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp))
             .padding(16.dp),
         verticalArrangement = Arrangement.Top
     ) {
         Text(
             text = "Menu",
-            fontSize = 28.sp, // Taille légèrement augmentée
+            fontSize = 28.sp,
             color = Color.White,
             modifier = Modifier.padding(bottom = 24.dp),
-            fontWeight = FontWeight.Bold // Titre en gras
+            fontWeight = FontWeight.Bold
         )
-        // Option : Liste des exercices
+        // Liste des exercices
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -113,19 +109,41 @@ fun DrawerContent(onItemClick: (String) -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
-                imageVector = Icons.Filled.Menu, // Icône alternative au lieu de List
+                imageVector = Icons.Filled.Menu,
                 contentDescription = "Liste des exercices",
                 tint = Color.White,
                 modifier = Modifier.size(24.dp).padding(end = 12.dp)
             )
             Text(
                 text = "Liste des exercices",
-                fontSize = 20.sp, // Police plus grande
-                fontWeight = FontWeight.Bold, // Texte en gras
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
                 color = Color.White
             )
         }
-        // Option : Retour à l'accueil
+
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
+                .clickable { onItemClick("Plan D'entrainement") },
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Menu, // Vous pouvez utiliser une icône spécifique
+                contentDescription = "Plan D'entrainement",
+                tint = Color.White,
+                modifier = Modifier.size(24.dp).padding(end = 12.dp)
+            )
+            Text(
+                text = "Plan D'entrainement",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+        }
+        // Retour à l'accueil
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -141,13 +159,16 @@ fun DrawerContent(onItemClick: (String) -> Unit) {
             )
             Text(
                 text = "Retour à l'accueil",
-                fontSize = 20.sp, // Police plus grande
-                fontWeight = FontWeight.Bold, // Texte en gras
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
                 color = Color.White
             )
         }
+        // Nouveau : Plan D'entrainement
+
     }
 }
+
 
 @Composable
 fun AnimatedHomeScreen() {
