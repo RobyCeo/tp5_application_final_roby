@@ -33,10 +33,10 @@ fun ExerciseListScreen(context: Context) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(12.dp)
     ) {
         Text(
-            text = "Liste des exercices",
+            text = "Liste des exercices avec videos et descriptions",
             fontSize = 30.sp,
             modifier = Modifier.padding(bottom = 16.dp),
             fontWeight = FontWeight.ExtraBold,
