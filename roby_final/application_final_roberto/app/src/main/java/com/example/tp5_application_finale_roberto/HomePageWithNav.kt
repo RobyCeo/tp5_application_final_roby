@@ -17,29 +17,34 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.tp5_application_finale_roberto.ExerciseListScreen
 import kotlinx.coroutines.launch
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePageWithNav() {
-    val drawerState = rememberDrawerState(DrawerValue.Closed) // État du menu latéral
-    val scope = rememberCoroutineScope() // Pour gérer l'ouverture/fermeture du menu
-    var selectedOption by remember { mutableStateOf("Home") } // Option sélectionnée
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    var selectedOption by remember { mutableStateOf("Home") }
+    val context = LocalContext.current
 
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             DrawerContent(
                 onItemClick = { option ->
-                    selectedOption = option // Met à jour l'option sélectionnée
-                    scope.launch { drawerState.close() } // Ferme le menu après sélection
+                    selectedOption = option
+                    scope.launch { drawerState.close() }
                 }
             )
         },
-        modifier = Modifier.fillMaxSize() // Empêche le débordement visuel
+        modifier = Modifier.fillMaxSize()
     ) {
         Scaffold(
             topBar = {
@@ -54,21 +59,41 @@ fun HomePageWithNav() {
                         }
                     },
                     colors = TopAppBarDefaults.mediumTopAppBarColors(
-                        containerColor = Color(0xFF6200EE) // Couleur mauve pour la barre supérieure
+                        containerColor = Color(0xFF6200EE)
                     )
                 )
             }
         ) { paddingValues ->
             Box(modifier = Modifier.padding(paddingValues).fillMaxSize()) {
                 when (selectedOption) {
-                    "Home" -> AnimatedHomeScreen() // Réintroduire les animations
-                    "Liste des exercices" -> ExerciseListScreen()
+                    "Home" -> AnimatedHomeScreen()
+                    "Liste des exercices" -> ExerciseListScreen(context)
                     "Retour à l'accueil" -> AnimatedHomeScreen()
                 }
             }
         }
     }
 }
+
+@Composable
+fun ExerciseListScreen(context: android.content.Context) {
+    // Exemple de contenu de la liste des exercices
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "Liste des exercices",
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black
+        )
+        // Ajouter le contenu ou les fonctionnalités nécessaires ici
+    }
+}
+
+
 
 @Composable
 fun DrawerContent(onItemClick: (String) -> Unit) {
@@ -82,22 +107,56 @@ fun DrawerContent(onItemClick: (String) -> Unit) {
     ) {
         Text(
             text = "Menu",
-            fontSize = 24.sp,
+            fontSize = 28.sp, // Taille légèrement augmentée
             color = Color.White,
-            modifier = Modifier.padding(bottom = 24.dp)
+            modifier = Modifier.padding(bottom = 24.dp),
+            fontWeight = FontWeight.Bold // Titre en gras
         )
-        ClickableText(
-            text = AnnotatedString("Liste des exercices"),
-            onClick = { onItemClick("Liste des exercices") },
-            modifier = Modifier.padding(vertical = 12.dp)
-        )
-        ClickableText(
-            text = AnnotatedString("Retour à l'accueil"),
-            onClick = { onItemClick("Retour à l'accueil") },
-            modifier = Modifier.padding(vertical = 12.dp)
-        )
+        // Option : Liste des exercices
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
+                .clickable { onItemClick("Liste des exercices") },
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Menu, // Icône alternative au lieu de List
+                contentDescription = "Liste des exercices",
+                tint = Color.White,
+                modifier = Modifier.size(24.dp).padding(end = 12.dp)
+            )
+            Text(
+                text = "Liste des exercices",
+                fontSize = 20.sp, // Police plus grande
+                fontWeight = FontWeight.Bold, // Texte en gras
+                color = Color.White
+            )
+        }
+        // Option : Retour à l'accueil
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
+                .clickable { onItemClick("Retour à l'accueil") },
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Home,
+                contentDescription = "Retour à l'accueil",
+                tint = Color.White,
+                modifier = Modifier.size(24.dp).padding(end = 12.dp)
+            )
+            Text(
+                text = "Retour à l'accueil",
+                fontSize = 20.sp, // Police plus grande
+                fontWeight = FontWeight.Bold, // Texte en gras
+                color = Color.White
+            )
+        }
     }
 }
+
 
 @Composable
 fun AnimatedHomeScreen() {

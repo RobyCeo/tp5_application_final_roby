@@ -18,7 +18,6 @@ import org.intellij.lang.annotations.JdkConstants
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePage(paddingValues: PaddingValues) {
-    // Animation pour l'image (respiration)
     val infiniteTransition = rememberInfiniteTransition()
     val scale by infiniteTransition.animateFloat(
         initialValue = 3.4f,
@@ -29,7 +28,6 @@ fun HomePage(paddingValues: PaddingValues) {
         )
     )
 
-    // Animation pour le texte (scintillement ou mouvement subtil)
     val textAlpha by infiniteTransition.animateFloat(
         initialValue = 0.5f,
         targetValue = 1f,
@@ -53,19 +51,17 @@ fun HomePage(paddingValues: PaddingValues) {
                 .padding(paddingValuesFromScaffold),
             contentAlignment = Alignment.Center
         ) {
-            // Image animée (respiration)
             Image(
                 painter = painterResource(id = com.example.tp5_application_finale_roberto.R.drawable.download),
                 contentDescription = "Silhouette d'une personne qui s'entraîne",
                 modifier = Modifier
-                    .size(300.dp) // Taille de l'image
+                    .size(300.dp)
                     .graphicsLayer(
                         scaleX = scale,
-                        scaleY = scale // Appliquez l'animation de respiration
+                        scaleY = scale
                     )
             )
 
-            // Texte animé (scintillement avec alpha)
             Text(
                 text = "B I E N V E N U E",
                 fontSize = 30.sp,
@@ -76,7 +72,7 @@ fun HomePage(paddingValues: PaddingValues) {
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 100.dp)
                     .offset(x = 20.dp)
-                    .graphicsLayer(alpha = textAlpha) // Animation de transparenc
+                    .graphicsLayer(alpha = textAlpha)
             )
         }
     }
