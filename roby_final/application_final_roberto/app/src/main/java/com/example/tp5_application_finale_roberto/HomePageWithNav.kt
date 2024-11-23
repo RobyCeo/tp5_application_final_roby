@@ -22,8 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.tp5_application_finale_roberto.ExerciseListScreen
 import kotlinx.coroutines.launch
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,17 +47,23 @@ fun HomePageWithNav() {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("Navigation") },
+                    title = {
+                        Text(
+                            text = "Navigation",
+                            color = Color.White // Titre en blanc
+                        )
+                    },
                     navigationIcon = {
                         IconButton(onClick = { scope.launch { drawerState.open() } }) {
                             Icon(
                                 imageVector = Icons.Filled.Menu,
-                                contentDescription = "Menu"
+                                contentDescription = "Menu",
+                                tint = Color.White // Icône en blanc
                             )
                         }
                     },
                     colors = TopAppBarDefaults.mediumTopAppBarColors(
-                        containerColor = Color(0xFF6200EE)
+                        containerColor = Color.Blue // Fond bleu de la barre
                     )
                 )
             }
@@ -93,15 +97,13 @@ fun ExerciseListScreen(context: android.content.Context) {
     }
 }
 
-
-
 @Composable
 fun DrawerContent(onItemClick: (String) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxHeight()
             .width(200.dp) // Réduction de la largeur du tiroir
-            .background(Color(0xFF6200EE)) // Fond violet du menu
+            .background(Color.Blue) // Fond violet du menu
             .padding(16.dp),
         verticalArrangement = Arrangement.Top
     ) {
@@ -157,7 +159,6 @@ fun DrawerContent(onItemClick: (String) -> Unit) {
     }
 }
 
-
 @Composable
 fun AnimatedHomeScreen() {
     // Animation pour l'image (effet de respiration)
@@ -203,7 +204,7 @@ fun AnimatedHomeScreen() {
         Text(
             text = "B I E N V E N U E",
             fontSize = 30.sp,
-            color = Color.White,
+            color = Color.Blue,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 50.dp)

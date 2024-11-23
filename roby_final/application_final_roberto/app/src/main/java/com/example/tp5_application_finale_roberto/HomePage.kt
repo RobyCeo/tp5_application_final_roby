@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -65,9 +66,10 @@ fun HomePage(paddingValues: PaddingValues) {
             Text(
                 text = "B I E N V E N U E",
                 fontSize = 30.sp,
-                color = Color.White,
+                color = Color.Blue,
                 fontStyle = FontStyle.Italic,
                 fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Serif,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 100.dp)
