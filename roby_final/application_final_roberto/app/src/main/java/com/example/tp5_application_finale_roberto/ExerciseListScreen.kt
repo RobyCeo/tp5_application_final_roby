@@ -71,29 +71,26 @@ fun ExerciseListScreen(context: Context) {
                         }
                         .padding(start = 8.dp)
                 )
-
             }
         }
     }
 }
 
-// Fonction pour ouvrir la vidéo
 fun openVideo(context: Context, exercise: String) {
     val videoMap = mapOf(
         "Pompes" to "android.resource://${context.packageName}/raw/video_roberto",
-        "Squats" to "android.resource://com.example.tp5_application_finale_roberto/raw/squats",
-        "Fentes" to "android.resource://com.example.tp5_application_finale_roberto/raw/fentes",
-        "Planche" to "android.resource://com.example.tp5_application_finale_roberto/raw/planche",
-        "Tractions" to "android.resource://com.example.tp5_application_finale_roberto/raw/tractions",
-        "Développé Couché" to "android.resource://com.example.tp5_application_finale_roberto/raw/developpe_couche",
-        "Soulevé de terre" to "android.resource://com.example.tp5_application_finale_roberto/raw/souleve_de_terre",
-        "Flexion des biceps avec la barre" to "android.resource://com.example.tp5_application_finale_roberto/raw/flexion_biceps"
+        "Squats" to "android.resource://${context.packageName}/raw/video_roberto",
+        "Fentes" to "android.resource://${context.packageName}/raw/video_roberto",
+        "Planche" to "android.resource://${context.packageName}/raw/video_roberto",
+        "Tractions" to "android.resource://${context.packageName}/raw/video_roberto"
     )
-    val videoUri = videoMap[exercise] ?: return
-    val intent = Intent(Intent.ACTION_VIEW).apply {
-        setDataAndType(Uri.parse(videoUri), "video/mp4")
-        flags = Intent.FLAG_ACTIVITY_NEW_TASK
-    }
 
+    // Récupère l'URI de la vidéo correspondant à l'exercice
+    val videoUri = videoMap[exercise] ?: return
+
+    // Démarre l'activité VideoPlayerActivity avec l'URI
+    val intent = Intent(context, VideoPlayerActivity::class.java).apply {
+        putExtra("videoUri", videoUri) // Passe l'URI de la vidéo à l'activité
+    }
     context.startActivity(intent)
 }

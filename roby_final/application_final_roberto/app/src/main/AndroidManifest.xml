@@ -12,6 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tp5_application_finale_roberto"
         tools:targetApi="31">
+
+
+        <activity
+            android:name=".VideoPlayerActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Tp5_application_finale_roberto" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -19,7 +26,6 @@
             android:theme="@style/Theme.Tp5_application_finale_roberto">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
