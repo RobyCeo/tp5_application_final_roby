@@ -1,11 +1,16 @@
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
@@ -16,10 +21,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.*
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.graphics.Brush
 import com.example.tp5_application_finale_roberto.ExerciseListScreen
 import kotlinx.coroutines.launch
 import androidx.compose.ui.platform.LocalContext
@@ -80,30 +88,12 @@ fun HomePageWithNav() {
 }
 
 @Composable
-fun ExerciseListScreen(context: android.content.Context) {
-    // Exemple de contenu de la liste des exercices
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Text(
-            text = "Liste des exercices",
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
-        )
-        // Ajouter le contenu ou les fonctionnalités nécessaires ici
-    }
-}
-
-@Composable
 fun DrawerContent(onItemClick: (String) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxHeight()
             .width(200.dp) // Réduction de la largeur du tiroir
-            .background(Color.Blue) // Fond violet du menu
+            .background(Color.Blue, shape = RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp)) // Bord arrondi
             .padding(16.dp),
         verticalArrangement = Arrangement.Top
     ) {
@@ -161,7 +151,6 @@ fun DrawerContent(onItemClick: (String) -> Unit) {
 
 @Composable
 fun AnimatedHomeScreen() {
-    // Animation pour l'image (effet de respiration)
     val infiniteTransition = rememberInfiniteTransition()
     val scale by infiniteTransition.animateFloat(
         initialValue = 1.06f,
@@ -172,7 +161,6 @@ fun AnimatedHomeScreen() {
         )
     )
 
-    // Animation pour le texte (effet de scintillement)
     val textAlpha by infiniteTransition.animateFloat(
         initialValue = 0.5f,
         targetValue = 1f,
@@ -185,26 +173,34 @@ fun AnimatedHomeScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black), // Fond noir pour contraste
+            .background(Color.Black),
         contentAlignment = Alignment.Center
     ) {
         Image(
             painter = painterResource(id = com.example.tp5_application_finale_roberto.R.drawable.download),
             contentDescription = "Silhouette d'une personne qui s'entraîne",
-            contentScale = ContentScale.Crop, // Adapte l'image pour remplir tout l'espace
+            contentScale = ContentScale.Crop,
             modifier = Modifier
-                .fillMaxSize() // Remplit toute la hauteur et largeur
+                .fillMaxSize()
                 .graphicsLayer(
                     scaleX = scale,
-                    scaleY = scale // Animation d'effet de respiration
+                    scaleY = scale
                 )
         )
 
-        // Texte animé (scintillement)
         Text(
             text = "B I E N V E N U E",
-            fontSize = 30.sp,
+            fontSize = 40.sp,
+            fontWeight = FontWeight.ExtraBold,
+            textAlign = TextAlign.Center,
             color = Color.Blue,
+            style = TextStyle(
+                shadow = Shadow(
+                    color = Color.White,
+                    offset = androidx.compose.ui.geometry.Offset(2f, 2f),
+                    blurRadius = 8f
+                )
+            ),
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 50.dp)

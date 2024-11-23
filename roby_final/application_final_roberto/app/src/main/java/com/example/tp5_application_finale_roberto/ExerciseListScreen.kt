@@ -6,6 +6,8 @@ import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,41 +38,47 @@ fun ExerciseListScreen(context: Context) {
             .padding(12.dp)
     ) {
         Text(
-            text = "Liste des exercices avec videos et descriptions",
+            text = "Liste des exercices avec vidéos et descriptions",
             fontSize = 30.sp,
-            modifier = Modifier.padding(bottom = 16.dp),
+            modifier = Modifier.padding(bottom = 14.dp),
             fontWeight = FontWeight.ExtraBold,
             fontFamily = FontFamily.Serif
         )
-        exercises.forEach { (exercise, description) ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 10.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = exercise,
-                        fontSize = 25.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = description,
-                        fontSize = 16.sp,
-                        color = Color.Gray
+        // Liste défilable des exercices
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            items(exercises.toList()) { (exercise, description) ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = exercise,
+                            fontSize = 25.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = description,
+                            fontSize = 16.sp,
+                            color = Color.Gray
+                        )
+                    }
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_video),
+                        contentDescription = "Voir la vidéo",
+                        modifier = Modifier
+                            .size(30.dp)
+                            .clickable {
+                                openVideo(context, exercise)
+                            }
+                            .padding(start = 8.dp)
                     )
                 }
-                Image(
-                    painter = painterResource(id = R.drawable.ic_video),
-                    contentDescription = "Voir la vidéo",
-                    modifier = Modifier
-                        .size(30.dp)
-                        .clickable {
-                            openVideo(context, exercise)
-                        }
-                        .padding(start = 8.dp)
-                )
             }
         }
     }
