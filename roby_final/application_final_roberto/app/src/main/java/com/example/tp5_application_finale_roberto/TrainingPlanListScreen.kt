@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun TrainingPlanListScreen(
-    plans: MutableList<TrainingExercise>, // Remplace Exercise par TrainingExercise
+    plans: MutableList<TrainingExercise>,
     onSelectPlan: (TrainingExercise) -> Unit
 ) {
     Column(

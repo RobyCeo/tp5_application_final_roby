@@ -83,11 +83,11 @@ fun TrainingPlanScreen(
                         sets = sets.value.toInt(),
                         repetitions = repetitions.value.toInt(),
                         planDuration = planDuration.value.toInt(),
-                        weight = 0, // Poids par défaut
-                        history = mutableListOf() // Historique vide par défaut
+                        weight = 0, //
+                        history = mutableListOf()
                     )
 
-                    exercises.add(newExercise) // Ajoute à la liste globale
+                    exercises.add(newExercise)
                     exerciseName.value = ""
                     sets.value = ""
                     repetitions.value = ""
@@ -110,7 +110,6 @@ fun TrainingPlanScreen(
 }
 
 
-// Composable to display an exercise and its progression
 @Composable
 fun ExerciseItem(exercise: Exercise) {
     Column(modifier = Modifier.padding(bottom = 16.dp)) {
@@ -137,7 +136,6 @@ fun ExerciseItem(exercise: Exercise) {
     }
 }
 
-// Data model for an exercise
 data class Exercise(
     val name: String,
     val sets: Int,
@@ -145,11 +143,11 @@ data class Exercise(
     val planDuration: Int
 ) {
     fun getProgression(): Map<Int, Pair<Int, Int>> {
-        // Generate progression over the weeks
+
         return (1..planDuration).associateWith { week ->
-            // Increase sets and repetitions progressively
-            val updatedSets = sets + (week - 1) // Add 1 set per week
-            val updatedReps = repetitions + (week - 1) * 2 // Add 2 reps per week
+
+            val updatedSets = sets + (week - 1)
+            val updatedReps = repetitions + (week - 1) * 2
             updatedSets to updatedReps
         }
     }

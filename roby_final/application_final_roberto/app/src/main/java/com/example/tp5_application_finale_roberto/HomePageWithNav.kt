@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.example.tp5_application_finale_roberto.EditExerciseScreen
 import com.example.tp5_application_finale_roberto.TrainingPlanListScreen
 import com.example.tp5_application_finale_roberto.TrainingPlanScreen
+import com.example.tp5_application_finale_roberto.savePdf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,8 +40,8 @@ fun HomePageWithNav() {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var selectedOption by remember { mutableStateOf("Home") }
-    val exercises = remember { mutableStateListOf<TrainingExercise>() } // Remplace Exercise par TrainingExercise
-    val selectedExercise = remember { mutableStateOf<TrainingExercise?>(null) } // Remplace Exercise par TrainingExercise
+    val exercises = remember { mutableStateListOf<TrainingExercise>() }
+    val selectedExercise = remember { mutableStateOf<TrainingExercise?>(null) }
     val context = LocalContext.current
 
     ModalNavigationDrawer(
@@ -75,11 +76,11 @@ fun HomePageWithNav() {
             Box(modifier = Modifier.padding(paddingValues).fillMaxSize()) {
                 when (selectedOption) {
                     "Home" -> AnimatedHomeScreen()
-                    "Liste des exercices" -> ExerciseListScreen(context) // Pas de changement ici
+                    "Liste des exercices" -> ExerciseListScreen(context)
                     "Retour à l'accueil" -> AnimatedHomeScreen()
                     "Plan D'entrainement" -> TrainingPlanScreen(
                         onViewPlansClick = { selectedOption = "Liste des plans" },
-                        exercises = exercises // Utilise la liste de TrainingExercise
+                        exercises = exercises
                     )
                     "Liste des plans" -> TrainingPlanListScreen(
                         plans = exercises,
@@ -88,18 +89,31 @@ fun HomePageWithNav() {
                     "Modifier le plan" -> {
                         selectedExercise.value?.let { exercise ->
                             EditExerciseScreen(
-                                context = context, // Passez le contexte ici
+                                context = context,
                                 exercise = exercise,
                                 onUpdate = { updatedExercise ->
                                     val index = exercises.indexOf(exercise)
                                     if (index >= 0) {
-                                        exercises[index] = updatedExercise // Met à jour TrainingExercise
+                                        exercises[index] = updatedExercise
                                     }
                                 },
                                 onBack = { selectedOption = "Liste des plans" }
                             )
+
+
+                            Button(
+                                onClick = {
+                                    savePdf(context, exercise)
+                                },
+                                modifier = Modifier
+                                    .padding(top = 400.dp)
+                                    .fillMaxWidth()
+                            ) {
+                                Text("Enregistrer en PDF")
+                            }
                         }
                     }
+
 
                 }
             }
