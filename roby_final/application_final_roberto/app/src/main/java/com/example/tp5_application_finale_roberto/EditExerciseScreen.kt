@@ -1,5 +1,7 @@
 package com.example.tp5_application_finale_roberto
 
+import android.content.Context
+import android.media.MediaPlayer
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
@@ -22,9 +24,12 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Composable
 fun EditExerciseScreen(
+    context: Context, // Ajout du contexte pour utiliser MediaPlayer
     exercise: TrainingExercise,
     onUpdate: (TrainingExercise) -> Unit,
     onBack: () -> Unit
@@ -39,9 +44,16 @@ fun EditExerciseScreen(
     // Animation state
     val scaleAnimation = remember { Animatable(1f) }
 
-    // Animation logic
+    // Animation logic with sound
     LaunchedEffect(showMessage.value) {
         if (showMessage.value) {
+            // Play sound during animation
+            if (messageColor.value == Color.Green) {
+                playSound(context, R.raw.progression) // Son de progression
+            } else {
+                playSound(context, R.raw.regression) // Son de régression
+            }
+
             scaleAnimation.animateTo(
                 targetValue = 1.2f,
                 animationSpec = tween(durationMillis = 300, easing = LinearEasing)
@@ -83,7 +95,6 @@ fun EditExerciseScreen(
             )
         }
 
-        // Input fields
         TextField(
             value = updatedSets.value,
             onValueChange = { updatedSets.value = it },
@@ -105,7 +116,6 @@ fun EditExerciseScreen(
             modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
         )
 
-        // Buttons for saving or returning
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
@@ -151,6 +161,17 @@ fun EditExerciseScreen(
             }) {
                 Text("Enregistrer")
             }
+        }
+    }
+}
+
+// Fonction utilitaire pour jouer un son
+private suspend fun playSound(context: Context, soundResId: Int) {
+    withContext(Dispatchers.IO) {
+        val mediaPlayer = MediaPlayer.create(context, soundResId)
+        mediaPlayer.start()
+        mediaPlayer.setOnCompletionListener {
+            it.release()
         }
     }
 }

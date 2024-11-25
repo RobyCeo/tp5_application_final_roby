@@ -88,6 +88,7 @@ fun HomePageWithNav() {
                     "Modifier le plan" -> {
                         selectedExercise.value?.let { exercise ->
                             EditExerciseScreen(
+                                context = context, // Passez le contexte ici
                                 exercise = exercise,
                                 onUpdate = { updatedExercise ->
                                     val index = exercises.indexOf(exercise)
@@ -99,6 +100,7 @@ fun HomePageWithNav() {
                             )
                         }
                     }
+
                 }
             }
         }
