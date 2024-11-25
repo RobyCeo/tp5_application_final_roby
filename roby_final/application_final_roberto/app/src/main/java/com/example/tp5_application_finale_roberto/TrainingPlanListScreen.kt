@@ -33,7 +33,7 @@ fun TrainingPlanListScreen(
             .padding(16.dp)
     ) {
         Text(
-            text = "Liste des plans d'entraînement",
+            text = "Plan d'entrainement",
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
             color = Color.Blue,

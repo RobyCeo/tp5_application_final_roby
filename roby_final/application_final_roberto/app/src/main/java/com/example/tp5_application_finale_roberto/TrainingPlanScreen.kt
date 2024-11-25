@@ -1,6 +1,7 @@
 package com.example.tp5_application_finale_roberto
 
 
+import TrainingExercise
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -81,10 +82,12 @@ fun TrainingPlanScreen(
                         name = exerciseName.value,
                         sets = sets.value.toInt(),
                         repetitions = repetitions.value.toInt(),
-                        planDuration = planDuration.value.toInt()
+                        planDuration = planDuration.value.toInt(),
+                        weight = 0, // Poids par défaut
+                        history = mutableListOf() // Historique vide par défaut
                     )
 
-                    exercises.add(newExercise ) // Ajoute à la liste globale
+                    exercises.add(newExercise) // Ajoute à la liste globale
                     exerciseName.value = ""
                     sets.value = ""
                     repetitions.value = ""
@@ -95,6 +98,7 @@ fun TrainingPlanScreen(
         ) {
             Text("Ajouter l'exercice")
         }
+
 
         Button(
             onClick = { onViewPlansClick() },

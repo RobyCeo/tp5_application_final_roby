@@ -30,7 +30,6 @@ import com.example.tp5_application_finale_roberto.ExerciseListScreen
 import kotlinx.coroutines.launch
 import androidx.compose.ui.platform.LocalContext
 import com.example.tp5_application_finale_roberto.EditExerciseScreen
-import com.example.tp5_application_finale_roberto.TrainingExercise
 import com.example.tp5_application_finale_roberto.TrainingPlanListScreen
 import com.example.tp5_application_finale_roberto.TrainingPlanScreen
 

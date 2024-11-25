@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun ExerciseItemWithActions(
-    exercise: TrainingExercise, // Remplacé par TrainingExercise
+    exercise: TrainingExercise,
     onDelete: () -> Unit,
     onSelect: () -> Unit
 ) {
@@ -48,9 +48,9 @@ fun ExerciseItemWithActions(
                 color = Color.Blue,
                 modifier = Modifier.padding(top = 8.dp)
             )
-            exercise.history.forEachIndexed { index, (sets, reps) ->
+            exercise.getProgression().forEach { (week, progression) ->
                 Text(
-                    text = "Semaine ${index + 1}: $sets sets, $reps répétitions",
+                    text = "Semaine $week : ${progression.first} sets, ${progression.second} répétitions, ${progression.third} kg",
                     fontSize = 14.sp,
                     color = Color.Gray
                 )
