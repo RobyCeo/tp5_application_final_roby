@@ -140,7 +140,7 @@ fun DrawerContent(onItemClick: (String) -> Unit) {
             modifier = Modifier.padding(bottom = 24.dp),
             fontWeight = FontWeight.Bold
         )
-        // Liste des exercices
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -183,7 +183,7 @@ fun DrawerContent(onItemClick: (String) -> Unit) {
                 color = Color.White
             )
         }
-        // Retour à l'accueil
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -204,7 +204,6 @@ fun DrawerContent(onItemClick: (String) -> Unit) {
                 color = Color.White
             )
         }
-        // Nouveau : Plan D'entrainement
 
     }
 }

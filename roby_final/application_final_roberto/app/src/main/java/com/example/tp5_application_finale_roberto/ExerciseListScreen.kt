@@ -47,7 +47,6 @@ fun ExerciseListScreen(context: Context) {
             fontWeight = FontWeight.ExtraBold,
             fontFamily = FontFamily.Serif,
         )
-        // Liste défilable des exercices
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -96,12 +95,10 @@ fun openVideo(context: Context, exercise: String) {
         "Tractions" to "android.resource://${context.packageName}/raw/video_roberto"
     )
 
-    // Récupère l'URI de la vidéo correspondant à l'exercice
     val videoUri = videoMap[exercise] ?: return
 
-    // Démarre l'activité VideoPlayerActivity avec l'URI
     val intent = Intent(context, VideoPlayerActivity::class.java).apply {
-        putExtra("videoUri", videoUri) // Passe l'URI de la vidéo à l'activité
+        putExtra("videoUri", videoUri)
     }
     context.startActivity(intent)
 }

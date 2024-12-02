@@ -80,7 +80,7 @@ fun FollowUpExerciseItem(exercise: Exercise) {
             color = Color.Blue,
             fontSize = 14.sp,
             modifier = Modifier.clickable {
-                // Action pour modifier cet exercice
+
             }
         )
         Text(
@@ -88,7 +88,7 @@ fun FollowUpExerciseItem(exercise: Exercise) {
             color = Color.Red,
             fontSize = 14.sp,
             modifier = Modifier.clickable {
-                // Action pour supprimer cet exercice
+
             }
         )
     }

@@ -29,7 +29,7 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun EditExerciseScreen(
-    context: Context, // Ajout du contexte pour utiliser MediaPlayer
+    context: Context,
     exercise: TrainingExercise,
     onUpdate: (TrainingExercise) -> Unit,
     onBack: () -> Unit
@@ -41,17 +41,15 @@ fun EditExerciseScreen(
     val messageColor = remember { mutableStateOf(Color.Green) }
     val messageText = remember { mutableStateOf("") }
 
-    // Animation state
+
     val scaleAnimation = remember { Animatable(1f) }
 
-    // Animation logic with sound
     LaunchedEffect(showMessage.value) {
         if (showMessage.value) {
-            // Play sound during animation
             if (messageColor.value == Color.Green) {
-                playSound(context, R.raw.progression) // Son de progression
+                playSound(context, R.raw.progression)
             } else {
-                playSound(context, R.raw.regression) // Son de régression
+                playSound(context, R.raw.regression)
             }
 
             scaleAnimation.animateTo(
@@ -79,7 +77,6 @@ fun EditExerciseScreen(
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        // Display the animated message
         if (showMessage.value) {
             Text(
                 text = messageText.value,
@@ -124,7 +121,7 @@ fun EditExerciseScreen(
                 Text("Retour")
             }
             Button(onClick = {
-                // Validation des entrées
+
                 if (updatedSets.value.isBlank() ||
                     updatedReps.value.isBlank() ||
                     updatedWeight.value.isBlank()
@@ -165,7 +162,6 @@ fun EditExerciseScreen(
     }
 }
 
-// Fonction utilitaire pour jouer un son
 private suspend fun playSound(context: Context, soundResId: Int) {
     withContext(Dispatchers.IO) {
         val mediaPlayer = MediaPlayer.create(context, soundResId)

@@ -40,7 +40,7 @@ fun ExerciseItemWithDelete(exercise: Exercise, onDelete: () -> Unit) {
         }
         Button(
             onClick = { onDelete() },
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Red) // Utilise containerColor
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
         ) {
             Text("Supprimer", color = Color.White)
         }

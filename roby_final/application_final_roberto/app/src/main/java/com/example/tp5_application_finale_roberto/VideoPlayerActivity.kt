@@ -27,13 +27,13 @@ class VideoPlayerActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Récupère l'URI de la vidéo passée via l'intent
+
         val videoUri = intent.getStringExtra("videoUri")
 
         setContent {
             VideoPlayerScreen(videoUri = videoUri ?: "") {
-                // Action pour revenir en arrière
-                finish() // Ferme l'activité actuelle
+
+                finish()
             }
         }
     }
@@ -48,13 +48,13 @@ fun VideoPlayerScreen(videoUri: String, onBackClick: () -> Unit) {
             .background(Color.Black),
         contentAlignment = Alignment.TopStart
     ) {
-        // Barre supérieure avec bouton de retour
+
         TopAppBar(
             title = { Text(text = "Lecture Vidéo", color = Color.White) },
             navigationIcon = {
                 IconButton(onClick = { onBackClick() }) {
                     Icon(
-                        imageVector = Icons.Filled.ArrowBack, // Icône Material Design pour retour
+                        imageVector = Icons.Filled.ArrowBack,
                         contentDescription = "Retour",
                         tint = Color.White
                     )
@@ -65,11 +65,10 @@ fun VideoPlayerScreen(videoUri: String, onBackClick: () -> Unit) {
             )
         )
 
-        // Contenu principal avec la vidéo
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 56.dp), // Place la vidéo sous la barre supérieure
+                .padding(top = 56.dp),
             contentAlignment = Alignment.Center
         ) {
             if (videoUri.isNotEmpty()) {
@@ -79,12 +78,10 @@ fun VideoPlayerScreen(videoUri: String, onBackClick: () -> Unit) {
                         VideoView(context).apply {
                             setVideoURI(Uri.parse(videoUri))
 
-                            // Ajoute des contrôles pour naviguer dans la vidéo
                             val mediaController = MediaController(context)
                             mediaController.setAnchorView(this)
                             setMediaController(mediaController)
 
-                            // Lance la vidéo automatiquement
                             setOnPreparedListener { start() }
                         }
                     },

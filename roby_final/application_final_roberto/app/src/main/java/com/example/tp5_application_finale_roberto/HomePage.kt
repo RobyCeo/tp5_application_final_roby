@@ -45,14 +45,14 @@ fun HomePage(paddingValues: PaddingValues) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                color = Color(0xFF6200EE), // Couleur de fond de la barre
-                shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp), // Arrondi
+                color = Color(0xFF6200EE),
+                shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp),
                 shadowElevation = 15.dp
             ) {
                 TopAppBar(
                     title = { Text("Welcome", color = Color.White) },
                     colors = TopAppBarDefaults.mediumTopAppBarColors(
-                        containerColor = Color.Transparent // Pour éviter un conflit de couleurs
+                        containerColor = Color.Transparent
                     )
                 )
             }
