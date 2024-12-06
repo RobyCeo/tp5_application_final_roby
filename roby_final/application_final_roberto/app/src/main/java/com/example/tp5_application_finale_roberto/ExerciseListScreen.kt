@@ -88,11 +88,12 @@ fun ExerciseListScreen(context: Context) {
 
 fun openVideo(context: Context, exercise: String) {
     val videoMap = mapOf(
-        "Pompes" to "android.resource://${context.packageName}/raw/video_roberto",
+        "Pompes" to "android.resource://${context.packageName}/raw/pushups",
         "Squats" to "android.resource://${context.packageName}/raw/video_roberto",
-        "Fentes" to "android.resource://${context.packageName}/raw/video_roberto",
+        "Fentes" to "android.resource://${context.packageName}/raw/lunges",
         "Planche" to "android.resource://${context.packageName}/raw/video_roberto",
-        "Tractions" to "android.resource://${context.packageName}/raw/video_roberto"
+        "Tractions" to "android.resource://${context.packageName}/raw/pullup",
+        "Soulevé de terre" to "android.resource://${context.packageName}/raw/deadlift",
     )
 
     val videoUri = videoMap[exercise] ?: return
